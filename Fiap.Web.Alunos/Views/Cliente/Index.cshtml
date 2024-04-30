@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Fiap.Web.Alunos.Models.ClienteModel>
+
+<h1>Clientes</h1>
+<p>
+    <!-- uso de TagHelpers para definir o Controller e a Action -->
+    <a asp-controller="Cliente" asp-action="Create">Novo Cliente</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Email</th>
+            <th>Nascimento</th>
+            <th>Representante</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                <label>@item.ClienteId</label>
+            </td>
+            <td>
+                <label>@item.Nome</label>
+            </td>
+            <td>
+                <label>@item.Sobrenome</label>
+            </td>
+            <td>
+                <label>@item.Email</label>
+            </td>
+            <td>
+                <label>@item.DataNascimento</label>
+            </td>
+            <td>
+                <label>@item.Representante.NomeRepresentante</label>
+            </td>
+            <td>
+                    <!-- asp-route-id é usado para informar o Id do Item selecionado. -->
+                <a asp-controller="Cliente"
+                    asp-action="Editar"
+                    asp-route-id="@item.ClienteId">Editar</a>
+
+                <a asp-controller="Cliente"
+                    asp-action="Consultar"
+                       asp-route-id="@item.ClienteId">Consultar</a>
+
+                <a asp-controller="Cliente"
+                    asp-action="Excluir"
+                    asp-route-id="@item.ClienteId">Excluir</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
