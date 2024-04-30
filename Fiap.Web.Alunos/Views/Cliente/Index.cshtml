@@ -1,10 +1,21 @@
 ﻿@model IEnumerable<Fiap.Web.Alunos.Models.ClienteModel>
 
 <h1>Clientes</h1>
+
+@if (!string.IsNullOrEmpty((String)TempData["mensagemSucesso"]))
+{
+    <div class="alert alert-warning" role="alert">@TempData["mensagemSucesso"]</div>
+}
+
+
 <p>
     <!-- uso de TagHelpers para definir o Controller e a Action -->
     <a asp-controller="Cliente" asp-action="Create">Novo Cliente</a>
 </p>
+
+
+<!-- Código suprimido ... -->
+
 <table class="table">
     <thead>
         <tr>

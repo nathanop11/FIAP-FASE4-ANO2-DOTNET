@@ -1,5 +1,6 @@
 ﻿using Fiap.Web.Alunos.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering; // importando o SelectList
 
 namespace Fiap.Web.Alunos.Controllers
 {
@@ -8,11 +9,15 @@ namespace Fiap.Web.Alunos.Controllers
         //Lista para armazenar os clientes
         public IList<ClienteModel> clientes { get; set; }
 
+        //Lista para armazenar os representantes
+        public IList<RepresentanteModel> representantes { get; set; } 
+
 
         public ClienteController()
         {
             //Simula a busca de clientes no banco de dados
             clientes = GerarClientesMocados();
+            representantes = GerarRepresentantesMocados();
         }
 
         public IActionResult Index()
@@ -32,10 +37,21 @@ namespace Fiap.Web.Alunos.Controllers
         {
             Console.WriteLine("Executou a Action Cadastrar()");
 
+            //Cria a variável para armazenar o SelectList
+            var selectListRepresentantes =
+                new SelectList(representantes,
+                                nameof(RepresentanteModel.RepresentanteId),
+                                nameof(RepresentanteModel.NomeRepresentante));
+
+            //Adiciona o SelectList a ViewBag para se enviado para a View
+            //A propriedade Representantes é criada de forma dinâmica na ViewBag
+            ViewBag.Representantes = selectListRepresentantes;
+
             // Retorna para a View Create um 
             // objeto modelo com as propriedades em branco 
             return View(new ClienteModel());
         }
+
 
         // Anotação de uso do Verb HTTP Post
         [HttpPost]
@@ -44,6 +60,9 @@ namespace Fiap.Web.Alunos.Controllers
             // Simila que os dados foram gravados.
             Console.WriteLine("Gravando o cliente");
 
+            //Criando a mensagem de sucesso que será exibida para o Cliente
+            TempData["mensagemSucesso"] = $"O cliente {clienteModel.Nome} foi cadastrado com suceso";
+
             // Substituímos o return View()
             // pelo método de redirecionamento
             return RedirectToAction(nameof(Index));
@@ -51,6 +70,24 @@ namespace Fiap.Web.Alunos.Controllers
             // O trecho nameof(Index) poderia ser usado da forma abaixo
             // return RedirectToAction("Index");
         }
+
+
+        /**
+         * Este método estático GerarRepresentantesMocados 
+         */
+        public static List<RepresentanteModel> GerarRepresentantesMocados()
+        {
+            var representantes = new List<RepresentanteModel>
+            {
+                new RepresentanteModel { RepresentanteId = 1, NomeRepresentante = "Representante 1", Cpf = "111.111.111-11" },
+                new RepresentanteModel { RepresentanteId = 2, NomeRepresentante = "Representante 2", Cpf = "222.222.222-22" },
+                new RepresentanteModel { RepresentanteId = 3, NomeRepresentante = "Representante 3", Cpf = "333.333.333-33" },
+                new RepresentanteModel { RepresentanteId = 4, NomeRepresentante = "Representante 4", Cpf = "444.444.444-44" }
+            };
+
+            return representantes;
+        }
+
 
 
 
