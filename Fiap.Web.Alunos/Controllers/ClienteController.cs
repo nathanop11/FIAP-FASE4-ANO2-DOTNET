@@ -26,6 +26,33 @@ namespace Fiap.Web.Alunos.Controllers
             return View(clientes);
         }
 
+        // Anotação de uso do Verb HTTP Get
+        [HttpGet]
+        public IActionResult Create()
+        {
+            Console.WriteLine("Executou a Action Cadastrar()");
+
+            // Retorna para a View Create um 
+            // objeto modelo com as propriedades em branco 
+            return View(new ClienteModel());
+        }
+
+        // Anotação de uso do Verb HTTP Post
+        [HttpPost]
+        public IActionResult Create(ClienteModel clienteModel)
+        {
+            // Simila que os dados foram gravados.
+            Console.WriteLine("Gravando o cliente");
+
+            // Substituímos o return View()
+            // pelo método de redirecionamento
+            return RedirectToAction(nameof(Index));
+
+            // O trecho nameof(Index) poderia ser usado da forma abaixo
+            // return RedirectToAction("Index");
+        }
+
+
 
         /**
          * Este método estático GerarClientesMocados 
