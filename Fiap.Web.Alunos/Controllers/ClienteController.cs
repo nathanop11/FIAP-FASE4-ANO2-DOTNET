@@ -72,6 +72,37 @@ namespace Fiap.Web.Alunos.Controllers
         }
 
 
+        // Anotação de uso do Verb HTTP Get
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+
+            var selectListRepresentantes =
+                new SelectList(representantes,
+                                nameof(RepresentanteModel.RepresentanteId),
+                                nameof(RepresentanteModel.NomeRepresentante));
+
+            ViewBag.Representantes = selectListRepresentantes;
+
+            // Simulando a busca no banco de dados 
+            var clienteConsultado =
+                clientes.Where(c => c.ClienteId == id).FirstOrDefault();
+
+            // Retornando o cliente consultado para a View
+            return View(clienteConsultado);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(ClienteModel clienteModel)
+        {
+            TempData["mensagemSucesso"] = $"Os dados do cliente {clienteModel.Nome} foram alterados com suceso";
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+
         /**
          * Este método estático GerarRepresentantesMocados 
          */
