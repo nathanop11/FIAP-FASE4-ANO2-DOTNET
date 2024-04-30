@@ -61,7 +61,7 @@ namespace Fiap.Web.Alunos.Controllers
             Console.WriteLine("Gravando o cliente");
 
             //Criando a mensagem de sucesso que será exibida para o Cliente
-            TempData["mensagemSucesso"] = $"O cliente {clienteModel.Nome} foi cadastrado com suceso";
+            TempData["mensagemSucesso"] = $"O cliente {clienteModel.Nome} foi cadastrado com sucesso";
 
             // Substituímos o return View()
             // pelo método de redirecionamento
@@ -96,7 +96,7 @@ namespace Fiap.Web.Alunos.Controllers
         [HttpPost]
         public IActionResult Edit(ClienteModel clienteModel)
         {
-            TempData["mensagemSucesso"] = $"Os dados do cliente {clienteModel.Nome} foram alterados com suceso";
+            TempData["mensagemSucesso"] = $"Os dados do cliente {clienteModel.Nome} foram alterados com sucesso";
             return RedirectToAction(nameof(Index));
         }
 
@@ -122,10 +122,29 @@ namespace Fiap.Web.Alunos.Controllers
         }
 
 
+        // Anotação de uso do Verb HTTP Get
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            // Simulando a busca no banco de dados 
+            var clienteConsultado =
+                clientes.Where(c => c.ClienteId == id).FirstOrDefault();
+
+            if (clienteConsultado != null)
+            {
+                TempData["mensagemSucesso"] = $"Os dados do cliente {clienteConsultado.Nome} foram removidos com sucesso";
+            } else
+            {
+                TempData["mensagemSucesso"] = $"OPS !!! Cliente inexistente.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
         /**
-         * Este método estático GerarRepresentantesMocados 
-         */
+            * Este método estático GerarRepresentantesMocados 
+            */
         public static List<RepresentanteModel> GerarRepresentantesMocados()
         {
             var representantes = new List<RepresentanteModel>
