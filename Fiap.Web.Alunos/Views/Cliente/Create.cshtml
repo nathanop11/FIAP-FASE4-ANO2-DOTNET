@@ -9,13 +9,13 @@
         <!-- IMPORTANTE elemento form -->
         <form asp-action="Create" asp-controller="Cliente">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!--
             <div class="form-group">
                 <label asp-for="ClienteId" class="control-label"></label>
-
-                <!-- IMPORTANTE elementos input asp-for="Nome da Propriedade do Model" -->
                 <input asp-for="ClienteId" class="form-control" />
                 <span asp-validation-for="ClienteId" class="text-danger"></span>
             </div>
+            -->
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
                 <input asp-for="Nome" class="form-control" />
