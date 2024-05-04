@@ -1,9 +1,17 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore;
-using System.Configuration;
+#region IMPORTAÇÃO REFERENTE AO BANCO DE DADOS
+using Fiap.Web.Alunos.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
+#endregion
 
 var builder = WebApplication.CreateBuilder(args);
+
+#region INICIALIZANDO O BANCO DE DADOS
+var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
+builder.Services.AddDbContext<DatabaseContext>(
+    opt => opt.UseOracle(connectionString).EnableSensitiveDataLogging(true)
+);
+#endregion
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
